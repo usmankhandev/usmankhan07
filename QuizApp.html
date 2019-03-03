@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>
+		</title>
+<style type="text/css">
+	.h{
+		background-color: navy;
+		text-align: center;
+		width:400px;
+		height:50px;
+	margin-left: 35%;
+	border-radius: 60px;
+	}
+	.after{
+		font-size: 45px;
+		text-align: center;
+	}
+	#qz{
+		margin-top: 50px;
+		background-color: grey;
+       box-shadow:15px 15px  black;
+		border-radius: 60px;
+		padding-bottom: 150px;
+	}
+	#QText{
+		margin-left: 50px;
+		font-size: 30px;
+	}
+	#op1,#op2,#op3,#op4{
+		float: left;
+
+		border-radius: 60px;
+		background-color: blue;
+		width:250px;
+		height:30px;
+		padding-top: 10px;
+		padding-bottom: 10px;
+		cursor: pointer;
+margin-left: 20%;
+text-align: center;
+	}
+	#op1:hover,#op2:hover,#op3:hover,#op4:hover{
+		background-color: black;
+		color: white;
+	}
+	#result{
+		background-color: black;
+		color: white;
+		padding:5px  10px;
+		border-radius: 10px;
+		margin-left:200px;
+	}
+	#result:hover{
+		background-color: white;
+		color: black;
+	}
+	#sc{
+		margin-left: 200px;
+		margin-top: 30px;
+		font-weight: bold;
+	}
+</style>
+<script type="text/javascript">
+	function Question(text,choice,answer){
+		this.text=text;
+		this.choice=choice;
+		this.answer=answer;
+			}
+	Question.prototype.ln = function (){
+	return this.choice.length;
+	}
+	Question.prototype.correct=function(choice){
+         return choice===this.answer;
+	}
+var qs=[new Question("Which one is not an object oriented programming languages?",["Java","C#","Cpp","C"],"C"),
+	new Question("Which language is used for styling web pages?",["HTML","JQuery","CSS","XML"],"CSS"),
+	new Question("There are _ main components of object oriented programming?",["1","6","2","4"],"4"),
+	new Question("Which language is  used as front-end  programming language?",["HTML","javascript","PHP","JSQL"],"HTML"),
+	new Question("MVC is _?",["Language","Framework","Library","All"],"Framework")];
+function Quiz(qs){
+		this.qs=qs;
+		this.index=0;
+		this.score=0;
+	
+	}
+	Quiz.prototype.TotalQs=function(){
+		return this.qs.length;
+	}
+	Quiz.prototype.getObject=function(){
+		return this.qs[this.index];
+
+	}
+	Quiz.prototype.incrObj=function () {
+	this.index++;
+	}
+	Quiz.prototype.qzEnd=function(){
+		
+		return (this.qs.length)==this.index;
+	}
+	Quiz.prototype.incrScore=function(){
+       this.score++;
+	}
+	Quiz.prototype.showScore=function(){
+		return this.score;
+	}
+	var q=new Quiz(qs);
+	var tag=document.getElementsByTagName("h3");
+  function set(){
+  	var txt=document.getElementById("QText");
+  	txt.innerHTML=q.getObject().text;
+   		for(var j=0;j<q.getObject().ln();j++){
+ 	tag[j].innerHTML=q.getObject().choice[j];
+}
+}
+window.onload=function(){
+	var s1=document.getElementById("sp1");
+	var s2=document.getElementById("sp2");
+	
+	
+s2.innerHTML=q.TotalQs();
+set();
+for(var i=1;i<=q.TotalQs();i++){
+window.onclick=function(event){
+
+switch(event.target){
+	case tag[0]:case tag[1]:case tag[2]:case tag[3]:
+if(q.getObject().correct(event.target.innerHTML)){
+//	alert("correct guess");
+	q.incrScore();
+}
+q.incrObj();
+s1.innerHTML=q.index;
+set();
+break;
+	default:
+	break; 
+}
+}
+}
+}
+</script>
+</head>
+<body>
+<h1 class="h">QUIZ APP</h1>
+<div id="qz">
+	<h2 id="QText"></h2><h3 id="op1"></h3><h3 id="op2"></h3><br><br><h3 id="op3"></h3><h3 id="op4"></h3>
+</div>
+<p id="sc">Question : <span id="sp1">0</span> of <span id="sp2"> y</span></p>
+<button id="result">See result</button>
+<script type="text/javascript">
+var s1=document.getElementById("sp1");
+	var s2=document.getElementById("sp2");
+	var r=document.getElementById("result");
+	var t=document.getElementById("qz");
+    var p=document.getElementById("sc");
+	r.addEventListener("click",show);
+	function show(){
+if(s1.innerHTML==s2.innerHTML){
+        t.setAttribute("class","after");
+		t.innerHTML="Quiz Completed and you scored : ";
+		t.innerHTML+=q.showScore();
+		r.style.display="none";
+		p.style.display="none";
+	
+	}
+	else{
+		alert("Incomplete quiz");
+	}
+}
+</script>
+</body>
+</html>
